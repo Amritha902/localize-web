@@ -1,0 +1,36 @@
+{
+ "slug": "flowers",
+ "instruction": "remove the yellow flowers",
+ "kind": "Remove",
+ "input": "demos/flowers/input.jpg",
+ "models": {
+  "base": {
+   "region_ms": 14.3,
+   "coverage": 82.7,
+   "edit_s": 16.1,
+   "outside_changed": 0.0,
+   "inside_changed": 93.2,
+   "query": "yellow flowers",
+   "boxes": 8
+  },
+  "gsam": {
+   "region_ms": 1092.9,
+   "coverage": 36.9,
+   "edit_s": 16.4,
+   "outside_changed": 0.0,
+   "inside_changed": 91.0,
+   "query": "yellow flowers",
+   "boxes": 8
+  },
+  "ours": {
+   "region_ms": 1244.0,
+   "coverage": 40.6,
+   "edit_s": 16.4,
+   "outside_changed": 0.0,
+   "inside_changed": 89.7,
+   "query": "yellow flowers",
+   "boxes": 8
+  }
+ },
+ "description": "plain empty background, nothing there"
+}
