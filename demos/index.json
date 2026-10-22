@@ -1,0 +1,362 @@
+[
+ {
+  "slug": "cat-fox",
+  "instruction": "change the cat to a fox",
+  "kind": "Modify",
+  "input": "demos/cat-fox/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 24.9,
+    "coverage": 56.1,
+    "edit_s": 17.3,
+    "outside_changed": 0.0,
+    "inside_changed": 90.8,
+    "query": "cat",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 914.7,
+    "coverage": 18.9,
+    "edit_s": 14.7,
+    "outside_changed": 0.0,
+    "inside_changed": 96.9,
+    "query": "cat",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 1050.9,
+    "coverage": 19.9,
+    "edit_s": 14.5,
+    "outside_changed": 0.0,
+    "inside_changed": 96.5,
+    "query": "cat",
+    "boxes": 1
+   }
+  },
+  "description": "fox"
+ },
+ {
+  "slug": "coffee",
+  "instruction": "change the coffee to orange juice",
+  "kind": "Modify",
+  "input": "demos/coffee/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 18.1,
+    "coverage": 63.5,
+    "edit_s": 15.0,
+    "outside_changed": 0.0,
+    "inside_changed": 70.5,
+    "query": "coffee",
+    "boxes": 2
+   },
+   "gsam": {
+    "region_ms": 1320.2,
+    "coverage": 25.4,
+    "edit_s": 14.6,
+    "outside_changed": 0.0,
+    "inside_changed": 94.5,
+    "query": "coffee",
+    "boxes": 2
+   },
+   "ours": {
+    "region_ms": 1455.1,
+    "coverage": 26.1,
+    "edit_s": 14.5,
+    "outside_changed": 0.0,
+    "inside_changed": 93.2,
+    "query": "coffee",
+    "boxes": 2
+   }
+  },
+  "description": "orange juice"
+ },
+ {
+  "slug": "polar-bear",
+  "instruction": "change the bear to a polar bear",
+  "kind": "Modify",
+  "input": "demos/polar-bear/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 6.3,
+    "coverage": 51.6,
+    "edit_s": 14.9,
+    "outside_changed": 0.0,
+    "inside_changed": 90.2,
+    "query": "bear",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 1043.8,
+    "coverage": 36.1,
+    "edit_s": 14.8,
+    "outside_changed": 0.0,
+    "inside_changed": 97.6,
+    "query": "bear",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 1172.8,
+    "coverage": 39.1,
+    "edit_s": 14.5,
+    "outside_changed": 0.0,
+    "inside_changed": 96.0,
+    "query": "bear",
+    "boxes": 1
+   }
+  },
+  "description": "polar bear"
+ },
+ {
+  "slug": "black-dog",
+  "instruction": "make the dog black",
+  "kind": "Recolour",
+  "input": "demos/black-dog/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 6.7,
+    "coverage": 25.6,
+    "edit_s": 14.6,
+    "outside_changed": 0.0,
+    "inside_changed": 92.7,
+    "query": "dog",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 941.7,
+    "coverage": 42.5,
+    "edit_s": 14.8,
+    "outside_changed": 0.0,
+    "inside_changed": 98.1,
+    "query": "dog",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 1074.8,
+    "coverage": 44.7,
+    "edit_s": 14.8,
+    "outside_changed": 0.0,
+    "inside_changed": 97.4,
+    "query": "dog",
+    "boxes": 1
+   }
+  },
+  "description": "black dog"
+ },
+ {
+  "slug": "tank",
+  "instruction": "change the fire truck into a battle tank",
+  "kind": "Modify",
+  "input": "demos/tank/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 7.1,
+    "coverage": 35.6,
+    "edit_s": 14.8,
+    "outside_changed": 0.0,
+    "inside_changed": 96.9,
+    "query": "fire truck",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 822.1,
+    "coverage": 24.8,
+    "edit_s": 14.9,
+    "outside_changed": 0.0,
+    "inside_changed": 94.3,
+    "query": "fire truck",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 948.8,
+    "coverage": 26.0,
+    "edit_s": 15.2,
+    "outside_changed": 0.0,
+    "inside_changed": 94.0,
+    "query": "fire truck",
+    "boxes": 1
+   }
+  },
+  "description": "battle tank"
+ },
+ {
+  "slug": "rose",
+  "instruction": "change the sunflower to a red rose",
+  "kind": "Modify",
+  "input": "demos/rose/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 7.9,
+    "coverage": 43.6,
+    "edit_s": 15.6,
+    "outside_changed": 0.0,
+    "inside_changed": 92.8,
+    "query": "sunflower",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 1295.3,
+    "coverage": 32.4,
+    "edit_s": 15.5,
+    "outside_changed": 0.0,
+    "inside_changed": 98.3,
+    "query": "sunflower",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 1443.0,
+    "coverage": 34.2,
+    "edit_s": 15.4,
+    "outside_changed": 0.0,
+    "inside_changed": 98.4,
+    "query": "sunflower",
+    "boxes": 1
+   }
+  },
+  "description": "red rose"
+ },
+ {
+  "slug": "tiger",
+  "instruction": "change the cat to a tiger",
+  "kind": "Modify",
+  "input": "demos/tiger/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 7.1,
+    "coverage": 29.8,
+    "edit_s": 16.7,
+    "outside_changed": 0.0,
+    "inside_changed": 92.3,
+    "query": "cat",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 1074.3,
+    "coverage": 39.4,
+    "edit_s": 15.4,
+    "outside_changed": 0.0,
+    "inside_changed": 96.0,
+    "query": "cat",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 1239.6,
+    "coverage": 40.4,
+    "edit_s": 15.6,
+    "outside_changed": 0.0,
+    "inside_changed": 94.9,
+    "query": "cat",
+    "boxes": 1
+   }
+  },
+  "description": "tiger"
+ },
+ {
+  "slug": "black-cat",
+  "instruction": "make the cat black",
+  "kind": "Recolour",
+  "input": "demos/black-cat/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 7.1,
+    "coverage": 23.3,
+    "edit_s": 15.8,
+    "outside_changed": 0.0,
+    "inside_changed": 82.6,
+    "query": "cat",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 803.2,
+    "coverage": 36.3,
+    "edit_s": 16.0,
+    "outside_changed": 0.0,
+    "inside_changed": 92.4,
+    "query": "cat",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 950.6,
+    "coverage": 37.9,
+    "edit_s": 16.0,
+    "outside_changed": 0.0,
+    "inside_changed": 92.3,
+    "query": "cat",
+    "boxes": 1
+   }
+  },
+  "description": "black cat"
+ },
+ {
+  "slug": "flowers",
+  "instruction": "remove the yellow flowers",
+  "kind": "Remove",
+  "input": "demos/flowers/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 14.3,
+    "coverage": 82.7,
+    "edit_s": 16.1,
+    "outside_changed": 0.0,
+    "inside_changed": 93.2,
+    "query": "yellow flowers",
+    "boxes": 8
+   },
+   "gsam": {
+    "region_ms": 1092.9,
+    "coverage": 36.9,
+    "edit_s": 16.4,
+    "outside_changed": 0.0,
+    "inside_changed": 91.0,
+    "query": "yellow flowers",
+    "boxes": 8
+   },
+   "ours": {
+    "region_ms": 1244.0,
+    "coverage": 40.6,
+    "edit_s": 16.4,
+    "outside_changed": 0.0,
+    "inside_changed": 89.7,
+    "query": "yellow flowers",
+    "boxes": 8
+   }
+  },
+  "description": "plain empty background, nothing there"
+ },
+ {
+  "slug": "ship",
+  "instruction": "add a cruise ship to the ocean",
+  "kind": "Insert",
+  "input": "demos/ship/input.jpg",
+  "models": {
+   "base": {
+    "region_ms": 19.0,
+    "coverage": 12.3,
+    "edit_s": 16.5,
+    "outside_changed": 0.0,
+    "inside_changed": 45.1,
+    "query": "ocean",
+    "boxes": 1
+   },
+   "gsam": {
+    "region_ms": 906.4,
+    "coverage": 59.5,
+    "edit_s": 25.9,
+    "outside_changed": 0.0,
+    "inside_changed": 95.3,
+    "query": "ocean",
+    "boxes": 1
+   },
+   "ours": {
+    "region_ms": 1075.4,
+    "coverage": 65.8,
+    "edit_s": 40.0,
+    "outside_changed": 0.0,
+    "inside_changed": 93.8,
+    "query": "ocean",
+    "boxes": 1
+   }
+  },
+  "description": "cruise ship"
+ }
+]

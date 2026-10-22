@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Localize — edit only what you mean</title>
+<meta name="description" content="Instruction-conditioned edit-region prediction. Disentangling localization from editing in instruction-guided image manipulation.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23111'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%230A84FF' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+
+<header class="nav glass">
+  <a class="brand" href="#top"><span class="mark"></span>Localize</a>
+  <nav>
+    <a href="#demo">Demo</a><a href="#how">How it works</a><a href="#results">Results</a><a href="#why">Why it matters</a><a href="paper.pdf" target="_blank" rel="noopener">Paper</a>
+  </nav>
+  <span id="status" class="pill" title="Inference backend">
+    <span class="dot"></span><span id="status-text">Checking backend…</span>
+  </span>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <p class="eyebrow">Instruction-guided image editing</p>
+    <h1>Edit only what<br>you mean.</h1>
+    <p class="lede">Tell an editor <em>what</em> to change and it decides <em>where</em> on its own — and gets it wrong.
+      Localize predicts the exact region an instruction refers to, measures it, and keeps every other pixel untouched.</p>
+    <div class="hero-stats">
+      <div><b data-count="0.2771">0.2771</b><span>IoU on 503 held-out edits</span></div>
+      <div><b>0.00%</b><span>pixels changed outside the region</span></div>
+      <div><b>1 laptop</b><span>no data centre required</span></div>
+    </div>
+    <a href="#demo" class="btn primary large">Try the demo</a>
+  </section>
+
+  <section id="demo" class="demo">
+    <div class="section-head">
+      <h2>Try it.</h2>
+      <p>Pick a photograph, edit the instruction if you like, and run three region predictors side by side.
+        Every predictor feeds the same editor with the same seed — only the region differs.</p>
+    </div>
+
+    <div class="gallery" id="gallery" role="listbox" aria-label="Demo photographs"></div>
+
+    <div class="workspace">
+      <div class="panel glass input-panel">
+        <label class="drop" id="drop" tabindex="0">
+          <img id="preview" alt="">
+          <div class="drop-hint" id="drop-hint">
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Drop a photograph<br><small>or choose one above</small></span>
+          </div>
+          <input type="file" id="file" accept="image/*" hidden>
+        </label>
+        <div class="field">
+          <label for="instruction">Instruction</label>
+          <input id="instruction" type="text" placeholder="change the cat to a fox" autocomplete="off" spellcheck="false">
+        </div>
+        <button class="btn primary run" id="run" disabled>
+          <span class="run-label">Run</span><span class="spinner" aria-hidden="true"></span>
+        </button>
+        <p class="mode" id="mode"></p>
+      </div>
+
+      <div class="results">
+        <article class="card glass" data-model="base">
+          <header><span class="swatch base"></span><div><h3>Base paper's mechanism</h3><p>AdaptEdit eq. 8 · 4.67 M</p></div></header>
+          <div class="frame"><img class="r-region" alt=""><img class="r-result" alt=""><div class="placeholder">Waiting</div></div>
+          <div class="seg"><button class="on" data-v="result">Result</button><button data-v="region">Region</button></div>
+          <dl class="metrics"></dl>
+        </article>
+        <article class="card glass" data-model="gsam">
+          <header><span class="swatch gsam"></span><div><h3>Best open model</h3><p>Grounding DINO + SAM 2.1</p></div></header>
+          <div class="frame"><img class="r-region" alt=""><img class="r-result" alt=""><div class="placeholder">Waiting</div></div>
+          <div class="seg"><button class="on" data-v="result">Result</button><button data-v="region">Region</button></div>
+          <dl class="metrics"></dl>
+        </article>
+        <article class="card glass featured" data-model="ours">
+          <header><span class="swatch ours"></span><div><h3>Localize <span class="tag">ours v2</span></h3><p>SAM 2.1 fused with our edit-region head</p></div></header>
+          <div class="frame"><img class="r-region" alt=""><img class="r-result" alt=""><div class="placeholder">Waiting</div></div>
+          <div class="seg"><button class="on" data-v="result">Result</button><button data-v="region">Region</button></div>
+          <dl class="metrics"></dl>
+        </article>
+      </div>
+    </div>
+
+    <div class="compare glass" id="compare" hidden>
+      <div class="compare-head"><h3>Before and after</h3><p>Drag to compare the photograph with Localize's edit.</p></div>
+      <div class="ba" id="ba">
+        <img id="ba-after" alt="after">
+        <div class="ba-before" id="ba-before-wrap"><img id="ba-before" alt="before"></div>
+        <div class="ba-handle" id="ba-handle"><span></span></div>
+        <span class="ba-label left">Before</span><span class="ba-label right">After</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="how">
+    <div class="section-head"><h2>How it works.</h2><p>Localization is separated from editing, so it can be measured on its own.</p></div>
+    <ol class="steps">
+      <li class="glass"><span class="n">1</span><h4>Read the instruction</h4><p>“change the cat to a fox” → the object it acts on: <i>cat</i>.</p></li>
+      <li class="glass"><span class="n">2</span><h4>Find and outline it</h4><p>Grounding DINO finds the object; SAM 2.1 traces its exact boundary.</p></li>
+      <li class="glass"><span class="n">3</span><h4>Add what edits really touch</h4><p>Our trained head adds shadows and spill an outline misses, inside the detected boxes.</p></li>
+      <li class="glass"><span class="n">4</span><h4>Edit only there</h4><p>Any editor paints inside the region. Everything outside is copied back, pixel for pixel.</p></li>
+    </ol>
+  </section>
+
+  <section id="results" class="res">
+    <div class="section-head"><h2>Measured, not claimed.</h2><p>Agreement with the true edit region (IoU) on 503 held-out MagicBrush edits.</p></div>
+    <div class="glass bars" id="bars"></div>
+    <div class="kinds glass">
+      <table>
+        <thead><tr><th>Localizer</th><th>Parameters</th><th>Insert</th><th>Modify</th><th>Remove</th></tr></thead>
+        <tbody>
+          <tr><td>CLIPSeg</td><td>150.7 M</td><td>0.094</td><td>0.212</td><td>0.299</td></tr>
+          <tr><td>Our first model</td><td>4.69 M</td><td>0.138</td><td>0.237</td><td>0.199</td></tr>
+          <tr><td>Grounding DINO + SAM 2.1</td><td>211 M</td><td>0.144</td><td>0.311</td><td>0.427</td></tr>
+          <tr class="hl"><td>Localize (ours v2)</td><td>211 M + 4.69 M</td><td>0.149</td><td>0.317</td><td>0.426</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Ours v2 settings were chosen by two-fold cross-validation on the held-out set. It improves on Grounding DINO + SAM 2.1 for 273 of 503 edits and is worse on 173 (paired t = 2.16). Insertion remains hard for every model: nothing can detect an object that does not exist yet.</p>
+    </div>
+  </section>
+
+  <section id="why" class="why">
+    <div class="section-head"><h2>Why it matters.</h2><p>Not a rival to ChatGPT or Gemini — a layer any editor can use.</p></div>
+    <div class="tiles">
+      <div class="tile glass"><h4>Visible</h4><p>Closed editors decide where to paint internally and never show it. Localize shows the region before anything changes.</p></div>
+      <div class="tile glass"><h4>Measurable</h4><p>A hidden region cannot be scored. Ours is scored directly against the ground truth — the base paper never reports this.</p></div>
+      <div class="tile glass"><h4>Light</h4><p>Runs on a single laptop. The base paper needs a 20.43 B-parameter model on eight 80 GB GPUs.</p></div>
+      <div class="tile glass"><h4>Preserving</h4><p>Without a region, an editor changed 93.1% of the pixels outside its target. With ours, 0.00%.</p></div>
+    </div>
+    <p class="honest">The pixels are painted by an off-the-shelf editor (Stable Diffusion inpainting), so image quality is the editor's. A stronger editor can be dropped in without changing localization.</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <p><b>Disentangling Localization from Editing in Instruction-Guided Image Manipulation</b></p>
+  <p>Amritha S · Yugeshwaran P · Guide: Dr. Saranya M · VIT Chennai</p>
+  <p><a href="paper.pdf" target="_blank" rel="noopener">Read the paper</a> · <button class="linkish" id="api-btn">Backend settings</button></p>
+</footer>
+
+<dialog id="api-dialog" class="glass">
+  <form method="dialog">
+    <h3>Inference backend</h3>
+    <p>Live runs need the GPU backend. Paste its URL, or leave empty to use the built-in default.</p>
+    <input id="api-input" type="url" placeholder="https://…trycloudflare.com">
+    <div class="row"><button class="btn" value="cancel">Cancel</button><button class="btn primary" id="api-save" value="ok">Save</button></div>
+  </form>
+</dialog>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
