@@ -1,0 +1,36 @@
+{
+ "slug": "tiger",
+ "instruction": "change the cat to a tiger",
+ "kind": "Modify",
+ "input": "demos/tiger/input.jpg",
+ "models": {
+  "base": {
+   "region_ms": 7.1,
+   "coverage": 29.8,
+   "edit_s": 16.7,
+   "outside_changed": 0.0,
+   "inside_changed": 92.3,
+   "query": "cat",
+   "boxes": 1
+  },
+  "gsam": {
+   "region_ms": 1074.3,
+   "coverage": 39.4,
+   "edit_s": 15.4,
+   "outside_changed": 0.0,
+   "inside_changed": 96.0,
+   "query": "cat",
+   "boxes": 1
+  },
+  "ours": {
+   "region_ms": 1239.6,
+   "coverage": 40.4,
+   "edit_s": 15.6,
+   "outside_changed": 0.0,
+   "inside_changed": 94.9,
+   "query": "cat",
+   "boxes": 1
+  }
+ },
+ "description": "tiger"
+}
