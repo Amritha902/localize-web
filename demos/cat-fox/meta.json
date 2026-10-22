@@ -1,0 +1,36 @@
+{
+ "slug": "cat-fox",
+ "instruction": "change the cat to a fox",
+ "kind": "Modify",
+ "input": "demos/cat-fox/input.jpg",
+ "models": {
+  "base": {
+   "region_ms": 24.9,
+   "coverage": 56.1,
+   "edit_s": 17.3,
+   "outside_changed": 0.0,
+   "inside_changed": 90.8,
+   "query": "cat",
+   "boxes": 1
+  },
+  "gsam": {
+   "region_ms": 914.7,
+   "coverage": 18.9,
+   "edit_s": 14.7,
+   "outside_changed": 0.0,
+   "inside_changed": 96.9,
+   "query": "cat",
+   "boxes": 1
+  },
+  "ours": {
+   "region_ms": 1050.9,
+   "coverage": 19.9,
+   "edit_s": 14.5,
+   "outside_changed": 0.0,
+   "inside_changed": 96.5,
+   "query": "cat",
+   "boxes": 1
+  }
+ },
+ "description": "fox"
+}
