@@ -1,0 +1,36 @@
+{
+ "slug": "rose",
+ "instruction": "change the sunflower to a red rose",
+ "kind": "Modify",
+ "input": "demos/rose/input.jpg",
+ "models": {
+  "base": {
+   "region_ms": 7.9,
+   "coverage": 43.6,
+   "edit_s": 15.6,
+   "outside_changed": 0.0,
+   "inside_changed": 92.8,
+   "query": "sunflower",
+   "boxes": 1
+  },
+  "gsam": {
+   "region_ms": 1295.3,
+   "coverage": 32.4,
+   "edit_s": 15.5,
+   "outside_changed": 0.0,
+   "inside_changed": 98.3,
+   "query": "sunflower",
+   "boxes": 1
+  },
+  "ours": {
+   "region_ms": 1443.0,
+   "coverage": 34.2,
+   "edit_s": 15.4,
+   "outside_changed": 0.0,
+   "inside_changed": 98.4,
+   "query": "sunflower",
+   "boxes": 1
+  }
+ },
+ "description": "red rose"
+}
