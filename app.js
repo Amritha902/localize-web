@@ -9,8 +9,17 @@
     const p = $("#status"); p.classList.remove("live", "cached"); if (kind) p.classList.add(kind);
     $("#status-text").textContent = text;
   };
+  // The backend's current public address is published to backend.json in the
+  // GitHub repo by start_backend.sh, so a new tunnel never needs a redeploy.
+  async function discoverBackend() {
+    if (localStorage.getItem("api")) return;
+    try {
+      const r = await fetch("https://raw.githubusercontent.com/Amritha902/localize-web/main/backend.json?t=" + Date.now(), { cache: "no-store" });
+      const j = await r.json(); if (j.url) API = j.url.replace(/\/$/, "");
+    } catch {}
+  }
   async function checkBackend() {
-    if (!API) { live = false; setStatus("cached", "Gallery mode"); return; }
+    if (!API) { live = false; setStatus("cached", "Gallery mode"); updateMode(); return; }
     try {
       const c = new AbortController(); const t = setTimeout(() => c.abort(), 5000);
       const r = await fetch(API + "/api/health", { signal: c.signal }); clearTimeout(t);
@@ -161,6 +170,6 @@
     v ? localStorage.setItem("api", v) : localStorage.removeItem("api");
     API = (v || window.API_BASE || "").replace(/\/$/, ""); checkBackend(); };
 
-  loadDemos().then(checkBackend);
-  setInterval(() => { if (!running) checkBackend(); }, 30000);
+  loadDemos().then(discoverBackend).then(checkBackend);
+  setInterval(async () => { if (!running) { await discoverBackend(); checkBackend(); } }, 30000);
 })();
