@@ -87,6 +87,16 @@
       </div>
     </div>
 
+    <div class="followup glass" id="followup" hidden>
+      <div class="compare-head"><h3>Follow up <span class="turn" id="turn">Turn 2</span></h3>
+        <p>Each predictor continues from its own last result, as a person would keep prompting.</p></div>
+      <div class="fu-row">
+        <input id="fu-input" type="text" placeholder="e.g. make it wear a red scarf" autocomplete="off" spellcheck="false">
+        <button class="btn primary" id="fu-run">Apply</button><button class="btn" id="fu-reset">Start over</button>
+      </div>
+      <ol class="history" id="history"></ol>
+    </div>
+
     <div class="compare glass" id="compare" hidden>
       <div class="compare-head"><h3>Before and after</h3><p>Drag to compare the photograph with Localize's edit.</p></div>
       <div class="ba" id="ba">
@@ -109,7 +119,9 @@
   </section>
 
   <section id="results" class="res">
-    <div class="section-head"><h2>Measured, not claimed.</h2><p>Agreement with the true edit region (IoU) on 503 held-out MagicBrush edits.</p></div>
+    <div class="section-head"><h2>Measured, not claimed.</h2><p>For each of 503 held-out MagicBrush edits we know the photograph before and after a human made the edit.
+      The true edit region is every pixel that changed between the two (colour difference CIE76 ΔE above threshold). Each model predicts a region from the photograph and instruction alone,
+      and is scored by IoU — the overlap with the true region divided by their union. 1.0 is a perfect match; none of these numbers come from the models' own reports.</p></div>
     <div class="glass bars" id="bars"></div>
     <div class="kinds glass">
       <table>

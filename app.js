@@ -3,6 +3,7 @@
   const MODELS = ["base", "gsam", "ours"];
   let API = (localStorage.getItem("api") || window.API_BASE || "").replace(/\/$/, "");
   let live = false, demos = [], cur = null, custom = null, running = false;
+  let chain = null; // per-model latest result for follow-up turns: {source, turn, base, gsam, ours}
 
   // ---- backend status
   const setStatus = (kind, text) => {
@@ -81,7 +82,7 @@
       $(".placeholder", c).textContent = "Waiting"; $(".metrics", c).innerHTML = "";
       $$(".seg button", c).forEach(b => b.classList.toggle("on", b.dataset.v === "result"));
     });
-    $("#compare").hidden = true;
+    $("#compare").hidden = true; $("#followup").hidden = true;
   }
   $$(".card").forEach(c => $$(".seg button", c).forEach(b => b.onclick = () => {
     $$(".seg button", c).forEach(x => x.classList.toggle("on", x === b));
@@ -107,7 +108,7 @@
   // ---- run
   $("#run").onclick = run;
   async function run() {
-    if (running) return; running = true; $("#run").classList.add("busy"); updateMode(); resetCards();
+    if (running) return; running = true; chain = null; $("#run").classList.add("busy"); updateMode(); resetCards();
     const ins = $("#instruction").value.trim(); let source = null;
     try {
       if (live) {
@@ -130,10 +131,56 @@
       }
       const after = $(`.card[data-model="ours"] .r-result`).src;
       showCompare(source, after);
+      chain = { source, turn: 1, ins: [ins] }; MODELS.forEach(m => chain[m] = $(`.card[data-model="${m}"] .r-result`).src);
+      $("#history").innerHTML = ""; await addHistory(ins); showFollowup();
     } catch (e) {
       MODELS.forEach(m => loading(m, false, "Could not reach the backend"));
       live = false; checkBackend();
     } finally { running = false; $("#run").classList.remove("busy"); updateMode(); }
+  }
+
+  // ---- follow-up turns: each predictor keeps editing its own last result
+  function showFollowup() {
+    $("#followup").hidden = !live; $("#turn").textContent = "Turn " + (chain.turn + 1);
+    $("#fu-input").value = ""; $("#fu-run").disabled = false;
+  }
+  // Share of the photograph that now differs from the original (any channel off by > 24/255).
+  const pixels = src => new Promise(res => { const im = new Image(); im.onload = () => {
+    const c = document.createElement("canvas"); c.width = c.height = 256; const x = c.getContext("2d");
+    x.drawImage(im, 0, 0, 256, 256); res(x.getImageData(0, 0, 256, 256).data); }; im.src = src; });
+  async function drift(src, now) {
+    const [a, b] = await Promise.all([pixels(src), pixels(now)]); let n = 0;
+    for (let i = 0; i < a.length; i += 4)
+      if (Math.max(Math.abs(a[i] - b[i]), Math.abs(a[i + 1] - b[i + 1]), Math.abs(a[i + 2] - b[i + 2])) > 24) n++;
+    return n / (a.length / 4) * 100;
+  }
+  async function addHistory(ins) {
+    const d = await Promise.all(MODELS.map(m => drift(chain.source, chain[m])));
+    const li = document.createElement("li");
+    li.innerHTML = `<div><b>Turn ${chain.turn}</b>${ins}</div>` + MODELS.map((m, k) =>
+      `<div><img src="${chain[m]}" alt=""><div class="cap">${["Base paper", "G-SAM2", "Ours v2"][k]} · ${d[k].toFixed(1)}% of photo changed</div></div>`).join("");
+    $("#history").appendChild(li);
+  }
+  $("#fu-input").addEventListener("keydown", e => { if (e.key === "Enter") followUp(); });
+  $("#fu-run").onclick = followUp;
+  $("#fu-reset").onclick = () => { chain = null; $("#followup").hidden = true; resetCards(); };
+  async function followUp() {
+    const ins = $("#fu-input").value.trim(); if (!ins || running || !chain || !live) return;
+    running = true; $("#fu-run").disabled = true; $("#run").classList.add("busy"); updateMode();
+    try {
+      for (const m of MODELS) {
+        loading(m, true, "Turn " + (chain.turn + 1) + " · predicting region…");
+        const blob = await (await fetch(chain[m])).blob();
+        const fd = new FormData(); fd.append("image", blob, "turn.jpg"); fd.append("instruction", ins); fd.append("model", m);
+        const r = await fetch(API + "/api/run", { method: "POST", body: fd });
+        if (!r.ok) throw new Error(await r.text());
+        const j = await r.json(); await fill(m, j.region, j.result, j); chain[m] = j.result;
+      }
+      chain.turn++; chain.ins.push(ins); await addHistory(ins);
+      showCompare(chain.source, chain.ours); showFollowup();
+    } catch (e) {
+      MODELS.forEach(m => loading(m, false, "Could not reach the backend")); live = false; checkBackend();
+    } finally { running = false; $("#run").classList.remove("busy"); $("#fu-run").disabled = false; updateMode(); }
   }
 
   // ---- before / after

@@ -177,3 +177,15 @@ dialog .row{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
   .pill{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+.followup{width:min(1160px,calc(100% - 40px));margin:18px auto 0;padding:18px}
+.followup .turn{font-size:12px;font-weight:600;color:var(--blue);background:rgba(10,132,255,.14);border-radius:999px;padding:3px 9px;margin-left:8px;vertical-align:middle}
+.fu-row{display:flex;gap:10px;flex-wrap:wrap}
+.fu-row input{flex:1 1 260px;font:inherit;font-size:15px;color:var(--text);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none}
+.fu-row input:focus{border-color:var(--blue)}
+.history{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+.history li{display:grid;grid-template-columns:150px repeat(3,1fr);gap:10px;align-items:center;font-size:13px;color:var(--faint)}
+.history li b{color:var(--text);font-weight:500;display:block}
+.history img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.history .cap{font-size:11px;text-align:center;margin-top:4px}
+@media (max-width:640px){.history li{grid-template-columns:1fr 1fr 1fr}.history li>div:first-child{grid-column:1/-1}}
