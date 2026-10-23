@@ -67,7 +67,7 @@
   function cachedOK() { return cur && !custom && $("#instruction").value.trim() === cur.instruction; }
   function updateMode() {
     const m = $("#mode");
-    if (live) m.textContent = "Runs live on the GPU backend · about 50 s for all three";
+    if (live) m.textContent = "Runs live on the GPU backend · about 1–2 minutes for all three";
     else if (cachedOK()) m.textContent = "Backend offline · showing this pipeline's recorded output";
     else m.textContent = "Custom photos and instructions need the live backend";
     $("#run").disabled = running || !(cur || custom) || !$("#instruction").value.trim() || (!live && !cachedOK());
