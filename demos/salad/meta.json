@@ -1,0 +1,38 @@
+{
+ "slug": "salad",
+ "instruction": "change the bowl of fruit into a plate of salad",
+ "kind": "Modify",
+ "input": "demos/salad/input.jpg",
+ "gt": "demos/salad/gt.png",
+ "gt_overlay": "demos/salad/gt_overlay.jpg",
+ "source": "MagicBrush dev, held-out turn 220",
+ "models": {
+  "base": {
+   "iou": 0.0482,
+   "coverage": 43.5,
+   "region_ms": 12.4,
+   "edit_s": 30.0,
+   "outside_changed": 0.0,
+   "query": "bowl of fruit",
+   "recolour": false
+  },
+  "gsam": {
+   "iou": 0.4753,
+   "coverage": 7.3,
+   "region_ms": 1635.6,
+   "edit_s": 30.5,
+   "outside_changed": 0.0,
+   "query": "bowl of fruit",
+   "recolour": false
+  },
+  "ours": {
+   "iou": 0.6684,
+   "coverage": 8.6,
+   "region_ms": 1942.7,
+   "edit_s": 30.0,
+   "outside_changed": 0.0,
+   "query": "bowl of fruit",
+   "recolour": false
+  }
+ }
+}
