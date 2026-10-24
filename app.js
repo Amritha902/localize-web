@@ -123,6 +123,14 @@
   }
   const fmtMs = ms => ms >= 1000 ? (ms / 1000).toFixed(1) + " s" : Math.round(ms) + " ms";
   const sleep = t => new Promise(r => setTimeout(r, t));
+  // The free tunnel occasionally drops a connection; retry a run before giving up.
+  async function post(fd) {
+    for (let k = 0; k < 3; k++) {
+      try { const r = await fetch(API + "/api/run", { method: "POST", body: fd }); if (r.ok) return r.json(); if (r.status < 500) throw new Error(await r.text()); }
+      catch (e) { if (k === 2) throw e; }
+      await sleep(2000 * (k + 1)); await discoverBackend();
+    }
+  }
 
   // ---- run
   $("#run").onclick = run;
@@ -138,9 +146,7 @@
           if (m !== "base") loading(m, true, "Predicting region…");
           const fd = new FormData(); fd.append("image", blob, "photo.jpg"); fd.append("instruction", ins); fd.append("model", m);
           if (gtBlob) fd.append("gt", gtBlob, "gt.png");
-          const r = await fetch(API + "/api/run", { method: "POST", body: fd });
-          if (!r.ok) throw new Error(await r.text());
-          const j = await r.json(); source = j.source; await fill(m, j.region, j.result, j);
+          const j = await post(fd); source = j.source; await fill(m, j.region, j.result, j);
         }
       } else {
         for (const m of MODELS) {
@@ -195,9 +201,7 @@
         loading(m, true, "Turn " + (chain.turn + 1) + " · predicting region…");
         const blob = await (await fetch(chain[m])).blob();
         const fd = new FormData(); fd.append("image", blob, "turn.jpg"); fd.append("instruction", ins); fd.append("model", m);
-        const r = await fetch(API + "/api/run", { method: "POST", body: fd });
-        if (!r.ok) throw new Error(await r.text());
-        const j = await r.json(); await fill(m, j.region, j.result, j); chain[m] = j.result;
+        const j = await post(fd); await fill(m, j.region, j.result, j); chain[m] = j.result;
       }
       chain.turn++; chain.ins.push(ins); await addHistory(ins);
       showCompare(chain.source, chain.ours); showFollowup();
