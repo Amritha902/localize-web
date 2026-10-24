@@ -8,30 +8,36 @@
  "source": "MagicBrush dev, held-out turn 102",
  "models": {
   "base": {
-   "iou": 0.0156,
-   "coverage": 91.1,
-   "region_ms": 14.2,
+   "region_ms": 7.3,
+   "coverage": 91.2,
    "edit_s": 0.0,
-   "outside_changed": 27.36,
+   "outside_changed": 0.0,
+   "inside_changed": 100.0,
    "query": "frisbee",
+   "boxes": 1,
+   "iou": 0.0159,
    "recolour": true
   },
   "gsam": {
-   "iou": 0.8582,
+   "region_ms": 744.8,
    "coverage": 2.4,
-   "region_ms": 1816.8,
    "edit_s": 0.0,
-   "outside_changed": 0.77,
+   "outside_changed": 0.0,
+   "inside_changed": 100.0,
    "query": "frisbee",
+   "boxes": 1,
+   "iou": 0.8601,
    "recolour": true
   },
   "ours": {
-   "iou": 0.9294,
+   "region_ms": 863.6,
    "coverage": 2.6,
-   "region_ms": 2143.8,
    "edit_s": 0.0,
-   "outside_changed": 0.79,
+   "outside_changed": 0.0,
+   "inside_changed": 100.0,
    "query": "frisbee",
+   "boxes": 1,
+   "iou": 0.9295,
    "recolour": true
   }
  }

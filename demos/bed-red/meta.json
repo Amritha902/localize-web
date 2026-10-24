@@ -8,30 +8,36 @@
  "source": "MagicBrush dev, held-out turn 494",
  "models": {
   "base": {
-   "iou": 0.1592,
-   "coverage": 34.4,
-   "region_ms": 93.6,
-   "edit_s": 0.1,
-   "outside_changed": 3.36,
+   "region_ms": 23.8,
+   "coverage": 37.8,
+   "edit_s": 0.0,
+   "outside_changed": 0.0,
+   "inside_changed": 100.0,
    "query": "bed",
+   "boxes": 1,
+   "iou": 0.1268,
    "recolour": true
   },
   "gsam": {
-   "iou": 0.0575,
-   "coverage": 8.1,
-   "region_ms": 2983.9,
+   "region_ms": 883.3,
+   "coverage": 7.7,
    "edit_s": 0.0,
-   "outside_changed": 4.7,
+   "outside_changed": 0.0,
+   "inside_changed": 100.0,
    "query": "bed",
+   "boxes": 1,
+   "iou": 0.0411,
    "recolour": true
   },
   "ours": {
-   "iou": 0.4811,
-   "coverage": 19.6,
-   "region_ms": 3473.7,
+   "region_ms": 1008.2,
+   "coverage": 18.5,
    "edit_s": 0.0,
-   "outside_changed": 5.39,
+   "outside_changed": 0.0,
+   "inside_changed": 100.0,
    "query": "bed",
+   "boxes": 1,
+   "iou": 0.422,
    "recolour": true
   }
  }
