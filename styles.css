@@ -189,3 +189,10 @@ dialog .row{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 .history img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
 .history .cap{font-size:11px;text-align:center;margin-top:4px}
 @media (max-width:640px){.history li{grid-template-columns:1fr 1fr 1fr}.history li>div:first-child{grid-column:1/-1}}
+
+.best{display:inline-block;margin-left:8px;font-size:11px;font-weight:600;color:#fff;background:var(--blue);border-radius:999px;padding:2px 8px;vertical-align:middle}
+.metrics dd.iou{font-size:18px;font-weight:700;color:var(--text)}
+.card:has(.best) .metrics dd.iou{color:var(--blue)}
+.truth{width:100%;margin-top:10px;font-size:13px}
+.truth.on{border-color:var(--blue);color:var(--blue)}
+.acc-note{width:min(1160px,calc(100% - 40px));margin:14px auto 0;color:var(--faint);font-size:13px;line-height:1.5}

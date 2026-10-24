@@ -40,7 +40,7 @@
     <div class="section-head">
       <h2>Try it.</h2>
       <p>Pick a photograph, edit the instruction if you like, and run three region predictors side by side.
-        Every predictor feeds the same editor with the same seed — only the region differs.</p>
+        Gallery photos come from MagicBrush's held-out set, where the true edit region is known, so every card is scored live.</p>
     </div>
 
     <div class="gallery" id="gallery" role="listbox" aria-label="Demo photographs"></div>
@@ -55,6 +55,7 @@
           </div>
           <input type="file" id="file" accept="image/*" hidden>
         </label>
+        <button class="btn truth" id="truth" hidden>Show true edit region</button>
         <div class="field">
           <label for="instruction">Instruction</label>
           <input id="instruction" type="text" placeholder="change the cat to a fox" autocomplete="off" spellcheck="false">
@@ -86,6 +87,8 @@
         </article>
       </div>
     </div>
+
+    <p class="acc-note" id="acc-note" hidden>Accuracy is the overlap (IoU) between each predictor's region and the pixels a person actually changed when making this edit, from MagicBrush's held-out set. 1.000 would be a perfect match. Every predictor uses the same editor and the same seed, so only the region differs. These ten were picked from held-out turns where our gain is large; across all 503 held-out turns ours v2 is more accurate than Grounding DINO + SAM 2.1 on 273 and less accurate on 173.</p>
 
     <div class="followup glass" id="followup" hidden>
       <div class="compare-head"><h3>Follow up <span class="turn" id="turn">Turn 2</span></h3>

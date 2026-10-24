@@ -37,13 +37,13 @@
     demos.forEach((d, i) => {
       const b = document.createElement("button");
       b.className = "thumb"; b.setAttribute("role", "option");
-      b.innerHTML = `<img src="${d.input}" alt="" loading="lazy"><div><b>${d.kind}</b>${d.instruction}</div>`;
+      b.innerHTML = `<img src="${d.input}" alt="" loading="lazy"><div><b>${d.kind}${d.gt ? " · scored" : ""}</b>${d.instruction}</div>`;
       b.onclick = () => pick(i); g.appendChild(b);
     });
     pick(0);
   }
   function pick(i) {
-    cur = demos[i]; custom = null;
+    cur = demos[i]; custom = null; $("#truth").hidden = !cur.gt_overlay; $("#truth").classList.remove("on");
     $$(".thumb").forEach((t, k) => t.classList.toggle("on", k === i));
     setPreview(cur.input); $("#instruction").value = cur.instruction; resetCards(); updateMode();
   }
@@ -59,6 +59,7 @@
   file.addEventListener("change", () => { if (file.files[0]) useFile(file.files[0]); });
   function useFile(f) {
     if (!f.type.startsWith("image/")) return;
+    $("#truth").hidden = true;
     custom = f; cur = null; $$(".thumb").forEach(t => t.classList.remove("on"));
     setPreview(URL.createObjectURL(f)); $("#instruction").value = ""; $("#instruction").focus(); resetCards(); updateMode();
   }
@@ -74,6 +75,10 @@
     $("#run").disabled = running || !(cur || custom) || !$("#instruction").value.trim() || (!live && !cachedOK());
   }
 
+  $("#truth").onclick = e => { e.preventDefault(); e.stopPropagation(); if (!cur || !cur.gt_overlay) return;
+    const on = $("#truth").classList.toggle("on"); $("#preview").src = on ? cur.gt_overlay : cur.input;
+    $("#truth").textContent = on ? "Hide true edit region" : "Show true edit region"; };
+
   // ---- cards
   function resetCards() {
     $$(".card").forEach(c => {
@@ -81,7 +86,9 @@
       $$("img", f).forEach(i => { i.classList.remove("ready"); i.removeAttribute("src"); });
       $(".placeholder", c).textContent = "Waiting"; $(".metrics", c).innerHTML = "";
       $$(".seg button", c).forEach(b => b.classList.toggle("on", b.dataset.v === "result"));
+      c.dataset.iou = ""; $$(".best", c).forEach(b => b.remove());
     });
+    $("#acc-note").hidden = true;
     $("#compare").hidden = true; $("#followup").hidden = true;
   }
   $$(".card").forEach(c => $$(".seg button", c).forEach(b => b.onclick = () => {
@@ -97,10 +104,22 @@
     const c = $(`.card[data-model="${m}"]`), f = $(".frame", c);
     await Promise.all([loadImg($(".r-region", c), region), loadImg($(".r-result", c), result)]);
     f.classList.remove("loading"); f.classList.add("done");
-    const rows = [["Region found in", fmtMs(d.region_ms)], ["Frame covered", d.coverage.toFixed(1) + "%"],
-                  ["Edited in", d.edit_s.toFixed(1) + " s"], ["Changed outside region", d.outside_changed.toFixed(2) + "%", "good"]];
-    if (m !== "base" && d.query) rows.splice(1, 0, ["Searched for", "“" + d.query + "”"]);
+    c.dataset.iou = d.iou == null ? "" : d.iou;
+    const rows = [];
+    if (d.iou != null) rows.push(["Accuracy (IoU vs true region)", d.iou.toFixed(3), "iou"]);
+    rows.push(["Changed outside region", d.outside_changed.toFixed(2) + "%", "good"]);
+    if (m !== "base" && d.query) rows.push(["Searched for", "“" + d.query + "”"]);
+    rows.push(["Area of photo", d.coverage.toFixed(1) + "%"], ["Region found in", fmtMs(d.region_ms)],
+              [d.recolour ? "Recoloured in" : "Edited in", d.edit_s.toFixed(1) + " s"]);
     $(".metrics", c).innerHTML = rows.map(([k, v, cl]) => `<dt>${k}</dt><dd class="${cl || ""}">${v}</dd>`).join("");
+  }
+  function markBest() {
+    const cs = $$(".card").filter(c => c.dataset.iou !== "");
+    $$(".card .best").forEach(b => b.remove());
+    if (cs.length < 3) { $("#acc-note").hidden = true; return; }
+    const best = cs.reduce((a, b) => (+b.dataset.iou > +a.dataset.iou ? b : a));
+    const tag = document.createElement("span"); tag.className = "best"; tag.textContent = "Most accurate";
+    $("header div h3", best).appendChild(tag); $("#acc-note").hidden = false;
   }
   const fmtMs = ms => ms >= 1000 ? (ms / 1000).toFixed(1) + " s" : Math.round(ms) + " ms";
   const sleep = t => new Promise(r => setTimeout(r, t));
@@ -113,10 +132,12 @@
     try {
       if (live) {
         const blob = custom || await (await fetch(cur.input)).blob();
+        const gtBlob = cachedOK() && cur.gt ? await (await fetch(cur.gt)).blob() : null;
         for (const m of MODELS) {
           loading(m, true, m === "base" ? "Predicting region…" : "Queued");
           if (m !== "base") loading(m, true, "Predicting region…");
           const fd = new FormData(); fd.append("image", blob, "photo.jpg"); fd.append("instruction", ins); fd.append("model", m);
+          if (gtBlob) fd.append("gt", gtBlob, "gt.png");
           const r = await fetch(API + "/api/run", { method: "POST", body: fd });
           if (!r.ok) throw new Error(await r.text());
           const j = await r.json(); source = j.source; await fill(m, j.region, j.result, j);
@@ -127,8 +148,10 @@
           const d = cur.models[m];
           await fill(m, `demos/${cur.slug}/${m}_region.jpg`, `demos/${cur.slug}/${m}_result.jpg`, d);
         }
+        markBest();
         source = cur.input;
       }
+      markBest();
       const after = $(`.card[data-model="ours"] .r-result`).src;
       showCompare(source, after);
       chain = { source, turn: 1, ins: [ins] }; MODELS.forEach(m => chain[m] = $(`.card[data-model="${m}"] .r-result`).src);

@@ -4,359 +4,379 @@
   "instruction": "change the cat to a fox",
   "kind": "Modify",
   "input": "demos/cat-fox/input.jpg",
+  "gt": "demos/cat-fox/gt.png",
+  "gt_overlay": "demos/cat-fox/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 30",
   "models": {
    "base": {
-    "region_ms": 24.9,
-    "coverage": 56.1,
-    "edit_s": 17.3,
+    "iou": 0.2743,
+    "coverage": 46.2,
+    "region_ms": 40.7,
+    "edit_s": 19.6,
     "outside_changed": 0.0,
-    "inside_changed": 90.8,
     "query": "cat",
-    "boxes": 1
+    "recolour": false
    },
    "gsam": {
-    "region_ms": 914.7,
-    "coverage": 18.9,
-    "edit_s": 14.7,
+    "iou": 0.6275,
+    "coverage": 18.8,
+    "region_ms": 1268.1,
+    "edit_s": 21.5,
     "outside_changed": 0.0,
-    "inside_changed": 96.9,
     "query": "cat",
-    "boxes": 1
+    "recolour": false
    },
    "ours": {
-    "region_ms": 1050.9,
+    "iou": 0.6786,
     "coverage": 19.9,
-    "edit_s": 14.5,
+    "region_ms": 1490.4,
+    "edit_s": 21.2,
     "outside_changed": 0.0,
-    "inside_changed": 96.5,
     "query": "cat",
-    "boxes": 1
+    "recolour": false
    }
-  },
-  "description": "fox"
+  }
  },
  {
-  "slug": "coffee",
-  "instruction": "change the coffee to orange juice",
-  "kind": "Modify",
-  "input": "demos/coffee/input.jpg",
-  "models": {
-   "base": {
-    "region_ms": 18.1,
-    "coverage": 63.5,
-    "edit_s": 15.0,
-    "outside_changed": 0.0,
-    "inside_changed": 70.5,
-    "query": "coffee",
-    "boxes": 2
-   },
-   "gsam": {
-    "region_ms": 1320.2,
-    "coverage": 25.4,
-    "edit_s": 14.6,
-    "outside_changed": 0.0,
-    "inside_changed": 94.5,
-    "query": "coffee",
-    "boxes": 2
-   },
-   "ours": {
-    "region_ms": 1455.1,
-    "coverage": 26.1,
-    "edit_s": 14.5,
-    "outside_changed": 0.0,
-    "inside_changed": 93.2,
-    "query": "coffee",
-    "boxes": 2
-   }
-  },
-  "description": "orange juice"
- },
- {
-  "slug": "polar-bear",
-  "instruction": "change the bear to a polar bear",
-  "kind": "Modify",
-  "input": "demos/polar-bear/input.jpg",
-  "models": {
-   "base": {
-    "region_ms": 6.3,
-    "coverage": 51.6,
-    "edit_s": 14.9,
-    "outside_changed": 0.0,
-    "inside_changed": 90.2,
-    "query": "bear",
-    "boxes": 1
-   },
-   "gsam": {
-    "region_ms": 1043.8,
-    "coverage": 36.1,
-    "edit_s": 14.8,
-    "outside_changed": 0.0,
-    "inside_changed": 97.6,
-    "query": "bear",
-    "boxes": 1
-   },
-   "ours": {
-    "region_ms": 1172.8,
-    "coverage": 39.1,
-    "edit_s": 14.5,
-    "outside_changed": 0.0,
-    "inside_changed": 96.0,
-    "query": "bear",
-    "boxes": 1
-   }
-  },
-  "description": "polar bear"
- },
- {
-  "slug": "black-dog",
-  "instruction": "make the dog black",
+  "slug": "bed-red",
+  "instruction": "The bed should be red",
   "kind": "Recolour",
-  "input": "demos/black-dog/input.jpg",
+  "input": "demos/bed-red/input.jpg",
+  "gt": "demos/bed-red/gt.png",
+  "gt_overlay": "demos/bed-red/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 494",
   "models": {
    "base": {
-    "region_ms": 6.7,
-    "coverage": 25.6,
-    "edit_s": 14.6,
-    "outside_changed": 0.0,
-    "inside_changed": 92.7,
-    "query": "dog",
-    "boxes": 1
+    "iou": 0.1592,
+    "coverage": 34.4,
+    "region_ms": 93.6,
+    "edit_s": 0.1,
+    "outside_changed": 3.36,
+    "query": "bed",
+    "recolour": true
    },
    "gsam": {
-    "region_ms": 941.7,
-    "coverage": 42.5,
-    "edit_s": 14.8,
-    "outside_changed": 0.0,
-    "inside_changed": 98.1,
-    "query": "dog",
-    "boxes": 1
+    "iou": 0.0575,
+    "coverage": 8.1,
+    "region_ms": 2983.9,
+    "edit_s": 0.0,
+    "outside_changed": 4.7,
+    "query": "bed",
+    "recolour": true
    },
    "ours": {
-    "region_ms": 1074.8,
-    "coverage": 44.7,
-    "edit_s": 14.8,
-    "outside_changed": 0.0,
-    "inside_changed": 97.4,
-    "query": "dog",
-    "boxes": 1
+    "iou": 0.4811,
+    "coverage": 19.6,
+    "region_ms": 3473.7,
+    "edit_s": 0.0,
+    "outside_changed": 5.39,
+    "query": "bed",
+    "recolour": true
    }
-  },
-  "description": "black dog"
+  }
  },
  {
-  "slug": "tank",
-  "instruction": "change the fire truck into a battle tank",
-  "kind": "Modify",
-  "input": "demos/tank/input.jpg",
+  "slug": "frisbee-blue",
+  "instruction": "make the frisbee blue",
+  "kind": "Recolour",
+  "input": "demos/frisbee-blue/input.jpg",
+  "gt": "demos/frisbee-blue/gt.png",
+  "gt_overlay": "demos/frisbee-blue/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 102",
   "models": {
    "base": {
-    "region_ms": 7.1,
-    "coverage": 35.6,
-    "edit_s": 14.8,
-    "outside_changed": 0.0,
-    "inside_changed": 96.9,
-    "query": "fire truck",
-    "boxes": 1
+    "iou": 0.0156,
+    "coverage": 91.1,
+    "region_ms": 14.2,
+    "edit_s": 0.0,
+    "outside_changed": 27.36,
+    "query": "frisbee",
+    "recolour": true
    },
    "gsam": {
-    "region_ms": 822.1,
-    "coverage": 24.8,
-    "edit_s": 14.9,
-    "outside_changed": 0.0,
-    "inside_changed": 94.3,
-    "query": "fire truck",
-    "boxes": 1
+    "iou": 0.8582,
+    "coverage": 2.4,
+    "region_ms": 1816.8,
+    "edit_s": 0.0,
+    "outside_changed": 0.77,
+    "query": "frisbee",
+    "recolour": true
    },
    "ours": {
-    "region_ms": 948.8,
-    "coverage": 26.0,
-    "edit_s": 15.2,
-    "outside_changed": 0.0,
-    "inside_changed": 94.0,
-    "query": "fire truck",
-    "boxes": 1
+    "iou": 0.9294,
+    "coverage": 2.6,
+    "region_ms": 2143.8,
+    "edit_s": 0.0,
+    "outside_changed": 0.79,
+    "query": "frisbee",
+    "recolour": true
    }
-  },
-  "description": "battle tank"
+  }
  },
  {
-  "slug": "rose",
-  "instruction": "change the sunflower to a red rose",
+  "slug": "cake",
+  "instruction": "It should be a chocolate cake on the plate",
   "kind": "Modify",
-  "input": "demos/rose/input.jpg",
+  "input": "demos/cake/input.jpg",
+  "gt": "demos/cake/gt.png",
+  "gt_overlay": "demos/cake/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 199",
   "models": {
    "base": {
-    "region_ms": 7.9,
-    "coverage": 43.6,
-    "edit_s": 15.6,
+    "iou": 0.4105,
+    "coverage": 66.9,
+    "region_ms": 24.8,
+    "edit_s": 42.3,
     "outside_changed": 0.0,
-    "inside_changed": 92.8,
-    "query": "sunflower",
-    "boxes": 1
+    "query": "plate",
+    "recolour": false
    },
    "gsam": {
-    "region_ms": 1295.3,
-    "coverage": 32.4,
-    "edit_s": 15.5,
+    "iou": 0.1053,
+    "coverage": 16.6,
+    "region_ms": 1768.9,
+    "edit_s": 33.2,
     "outside_changed": 0.0,
-    "inside_changed": 98.3,
-    "query": "sunflower",
-    "boxes": 1
+    "query": "plate",
+    "recolour": false
    },
    "ours": {
-    "region_ms": 1443.0,
-    "coverage": 34.2,
+    "iou": 0.7172,
+    "coverage": 39.3,
+    "region_ms": 2162.4,
+    "edit_s": 33.6,
+    "outside_changed": 0.0,
+    "query": "plate",
+    "recolour": false
+   }
+  }
+ },
+ {
+  "slug": "salad",
+  "instruction": "change the bowl of fruit into a plate of salad",
+  "kind": "Modify",
+  "input": "demos/salad/input.jpg",
+  "gt": "demos/salad/gt.png",
+  "gt_overlay": "demos/salad/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 220",
+  "models": {
+   "base": {
+    "iou": 0.0482,
+    "coverage": 43.5,
+    "region_ms": 12.4,
+    "edit_s": 30.0,
+    "outside_changed": 0.0,
+    "query": "bowl of fruit",
+    "recolour": false
+   },
+   "gsam": {
+    "iou": 0.4753,
+    "coverage": 7.3,
+    "region_ms": 1635.6,
+    "edit_s": 30.5,
+    "outside_changed": 0.0,
+    "query": "bowl of fruit",
+    "recolour": false
+   },
+   "ours": {
+    "iou": 0.6684,
+    "coverage": 8.6,
+    "region_ms": 1942.7,
+    "edit_s": 30.0,
+    "outside_changed": 0.0,
+    "query": "bowl of fruit",
+    "recolour": false
+   }
+  }
+ },
+ {
+  "slug": "sink",
+  "instruction": "let it be a single sink",
+  "kind": "Modify",
+  "input": "demos/sink/input.jpg",
+  "gt": "demos/sink/gt.png",
+  "gt_overlay": "demos/sink/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 141",
+  "models": {
+   "base": {
+    "iou": 0.3451,
+    "coverage": 42.9,
+    "region_ms": 14.2,
+    "edit_s": 30.0,
+    "outside_changed": 0.0,
+    "query": "let it be a single sink",
+    "recolour": false
+   },
+   "gsam": {
+    "iou": 0.6196,
+    "coverage": 27.3,
+    "region_ms": 1605.6,
+    "edit_s": 32.4,
+    "outside_changed": 0.0,
+    "query": "let it be a single sink",
+    "recolour": false
+   },
+   "ours": {
+    "iou": 0.7334,
+    "coverage": 31.7,
+    "region_ms": 1911.0,
+    "edit_s": 32.7,
+    "outside_changed": 0.0,
+    "query": "let it be a single sink",
+    "recolour": false
+   }
+  }
+ },
+ {
+  "slug": "veggies",
+  "instruction": "Replace the fruit with more veggies",
+  "kind": "Modify",
+  "input": "demos/veggies/input.jpg",
+  "gt": "demos/veggies/gt.png",
+  "gt_overlay": "demos/veggies/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 204",
+  "models": {
+   "base": {
+    "iou": 0.2368,
+    "coverage": 87.4,
+    "region_ms": 61.4,
+    "edit_s": 60.8,
+    "outside_changed": 0.0,
+    "query": "fruit",
+    "recolour": false
+   },
+   "gsam": {
+    "iou": 0.4177,
+    "coverage": 14.8,
+    "region_ms": 5163.1,
+    "edit_s": 59.6,
+    "outside_changed": 0.0,
+    "query": "fruit",
+    "recolour": false
+   },
+   "ours": {
+    "iou": 0.6056,
+    "coverage": 17.6,
+    "region_ms": 5757.3,
+    "edit_s": 57.9,
+    "outside_changed": 0.0,
+    "query": "fruit",
+    "recolour": false
+   }
+  }
+ },
+ {
+  "slug": "ice-cream",
+  "instruction": "let the plate contain ice cream",
+  "kind": "Modify",
+  "input": "demos/ice-cream/input.jpg",
+  "gt": "demos/ice-cream/gt.png",
+  "gt_overlay": "demos/ice-cream/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 337",
+  "models": {
+   "base": {
+    "iou": 0.0302,
+    "coverage": 17.2,
+    "region_ms": 43.9,
+    "edit_s": 68.4,
+    "outside_changed": 0.0,
+    "query": "let the plate contain ice cream",
+    "recolour": false
+   },
+   "gsam": {
+    "iou": 0.0917,
+    "coverage": 5.4,
+    "region_ms": 3516.3,
+    "edit_s": 64.8,
+    "outside_changed": 0.0,
+    "query": "let the plate contain ice cream",
+    "recolour": false
+   },
+   "ours": {
+    "iou": 0.6055,
+    "coverage": 8.6,
+    "region_ms": 3940.2,
+    "edit_s": 59.7,
+    "outside_changed": 0.0,
+    "query": "let the plate contain ice cream",
+    "recolour": false
+   }
+  }
+ },
+ {
+  "slug": "mountains",
+  "instruction": "edit some mountains in the background",
+  "kind": "Modify",
+  "input": "demos/mountains/input.jpg",
+  "gt": "demos/mountains/gt.png",
+  "gt_overlay": "demos/mountains/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 0",
+  "models": {
+   "base": {
+    "iou": 0.4318,
+    "coverage": 87.6,
+    "region_ms": 20.7,
+    "edit_s": 58.5,
+    "outside_changed": 0.0,
+    "query": "edit some mountains in the background",
+    "recolour": false
+   },
+   "gsam": {
+    "iou": 0.3771,
+    "coverage": 16.9,
+    "region_ms": 2763.0,
+    "edit_s": 23.2,
+    "outside_changed": 0.0,
+    "query": "edit some mountains in the background",
+    "recolour": false
+   },
+   "ours": {
+    "iou": 0.4515,
+    "coverage": 20.5,
+    "region_ms": 3701.3,
     "edit_s": 15.4,
     "outside_changed": 0.0,
-    "inside_changed": 98.4,
-    "query": "sunflower",
-    "boxes": 1
+    "query": "edit some mountains in the background",
+    "recolour": false
    }
-  },
-  "description": "red rose"
+  }
  },
  {
-  "slug": "tiger",
-  "instruction": "change the cat to a tiger",
+  "slug": "jacket",
+  "instruction": "let the man be dressed in a dinner jacket",
   "kind": "Modify",
-  "input": "demos/tiger/input.jpg",
+  "input": "demos/jacket/input.jpg",
+  "gt": "demos/jacket/gt.png",
+  "gt_overlay": "demos/jacket/gt_overlay.jpg",
+  "source": "MagicBrush dev, held-out turn 79",
   "models": {
    "base": {
-    "region_ms": 7.1,
-    "coverage": 29.8,
-    "edit_s": 16.7,
+    "iou": 0.4126,
+    "coverage": 43.3,
+    "region_ms": 26.3,
+    "edit_s": 59.8,
     "outside_changed": 0.0,
-    "inside_changed": 92.3,
-    "query": "cat",
-    "boxes": 1
+    "query": "man",
+    "recolour": false
    },
    "gsam": {
-    "region_ms": 1074.3,
-    "coverage": 39.4,
-    "edit_s": 15.4,
+    "iou": 0.5908,
+    "coverage": 29.5,
+    "region_ms": 2365.0,
+    "edit_s": 59.2,
     "outside_changed": 0.0,
-    "inside_changed": 96.0,
-    "query": "cat",
-    "boxes": 1
+    "query": "man",
+    "recolour": false
    },
    "ours": {
-    "region_ms": 1239.6,
-    "coverage": 40.4,
-    "edit_s": 15.6,
+    "iou": 0.7034,
+    "coverage": 34.3,
+    "region_ms": 3314.5,
+    "edit_s": 59.9,
     "outside_changed": 0.0,
-    "inside_changed": 94.9,
-    "query": "cat",
-    "boxes": 1
+    "query": "man",
+    "recolour": false
    }
-  },
-  "description": "tiger"
- },
- {
-  "slug": "black-cat",
-  "instruction": "make the cat black",
-  "kind": "Recolour",
-  "input": "demos/black-cat/input.jpg",
-  "models": {
-   "base": {
-    "region_ms": 7.1,
-    "coverage": 23.3,
-    "edit_s": 15.8,
-    "outside_changed": 0.0,
-    "inside_changed": 82.6,
-    "query": "cat",
-    "boxes": 1
-   },
-   "gsam": {
-    "region_ms": 803.2,
-    "coverage": 36.3,
-    "edit_s": 16.0,
-    "outside_changed": 0.0,
-    "inside_changed": 92.4,
-    "query": "cat",
-    "boxes": 1
-   },
-   "ours": {
-    "region_ms": 950.6,
-    "coverage": 37.9,
-    "edit_s": 16.0,
-    "outside_changed": 0.0,
-    "inside_changed": 92.3,
-    "query": "cat",
-    "boxes": 1
-   }
-  },
-  "description": "black cat"
- },
- {
-  "slug": "flowers",
-  "instruction": "remove the yellow flowers",
-  "kind": "Remove",
-  "input": "demos/flowers/input.jpg",
-  "models": {
-   "base": {
-    "region_ms": 14.3,
-    "coverage": 82.7,
-    "edit_s": 16.1,
-    "outside_changed": 0.0,
-    "inside_changed": 93.2,
-    "query": "yellow flowers",
-    "boxes": 8
-   },
-   "gsam": {
-    "region_ms": 1092.9,
-    "coverage": 36.9,
-    "edit_s": 16.4,
-    "outside_changed": 0.0,
-    "inside_changed": 91.0,
-    "query": "yellow flowers",
-    "boxes": 8
-   },
-   "ours": {
-    "region_ms": 1244.0,
-    "coverage": 40.6,
-    "edit_s": 16.4,
-    "outside_changed": 0.0,
-    "inside_changed": 89.7,
-    "query": "yellow flowers",
-    "boxes": 8
-   }
-  },
-  "description": "plain empty background, nothing there"
- },
- {
-  "slug": "ship",
-  "instruction": "add a cruise ship to the ocean",
-  "kind": "Insert",
-  "input": "demos/ship/input.jpg",
-  "models": {
-   "base": {
-    "region_ms": 19.0,
-    "coverage": 12.3,
-    "edit_s": 16.5,
-    "outside_changed": 0.0,
-    "inside_changed": 45.1,
-    "query": "ocean",
-    "boxes": 1
-   },
-   "gsam": {
-    "region_ms": 906.4,
-    "coverage": 59.5,
-    "edit_s": 25.9,
-    "outside_changed": 0.0,
-    "inside_changed": 95.3,
-    "query": "ocean",
-    "boxes": 1
-   },
-   "ours": {
-    "region_ms": 1075.4,
-    "coverage": 65.8,
-    "edit_s": 40.0,
-    "outside_changed": 0.0,
-    "inside_changed": 93.8,
-    "query": "ocean",
-    "boxes": 1
-   }
-  },
-  "description": "cruise ship"
+  }
  }
 ]
