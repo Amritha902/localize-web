@@ -3,34 +3,36 @@
  "instruction": "change the cat to a fox",
  "kind": "Modify",
  "input": "demos/cat-fox/input.jpg",
+ "gt": "demos/cat-fox/gt.png",
+ "gt_overlay": "demos/cat-fox/gt_overlay.jpg",
+ "source": "MagicBrush dev, held-out turn 30",
  "models": {
   "base": {
-   "region_ms": 24.9,
-   "coverage": 56.1,
-   "edit_s": 17.3,
+   "iou": 0.2743,
+   "coverage": 46.2,
+   "region_ms": 40.7,
+   "edit_s": 19.6,
    "outside_changed": 0.0,
-   "inside_changed": 90.8,
    "query": "cat",
-   "boxes": 1
+   "recolour": false
   },
   "gsam": {
-   "region_ms": 914.7,
-   "coverage": 18.9,
-   "edit_s": 14.7,
+   "iou": 0.6275,
+   "coverage": 18.8,
+   "region_ms": 1268.1,
+   "edit_s": 21.5,
    "outside_changed": 0.0,
-   "inside_changed": 96.9,
    "query": "cat",
-   "boxes": 1
+   "recolour": false
   },
   "ours": {
-   "region_ms": 1050.9,
+   "iou": 0.6786,
    "coverage": 19.9,
-   "edit_s": 14.5,
+   "region_ms": 1490.4,
+   "edit_s": 21.2,
    "outside_changed": 0.0,
-   "inside_changed": 96.5,
    "query": "cat",
-   "boxes": 1
+   "recolour": false
   }
- },
- "description": "fox"
+ }
 }
