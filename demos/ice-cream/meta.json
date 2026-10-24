@@ -1,0 +1,38 @@
+{
+ "slug": "ice-cream",
+ "instruction": "let the plate contain ice cream",
+ "kind": "Modify",
+ "input": "demos/ice-cream/input.jpg",
+ "gt": "demos/ice-cream/gt.png",
+ "gt_overlay": "demos/ice-cream/gt_overlay.jpg",
+ "source": "MagicBrush dev, held-out turn 337",
+ "models": {
+  "base": {
+   "iou": 0.0302,
+   "coverage": 17.2,
+   "region_ms": 43.9,
+   "edit_s": 68.4,
+   "outside_changed": 0.0,
+   "query": "let the plate contain ice cream",
+   "recolour": false
+  },
+  "gsam": {
+   "iou": 0.0917,
+   "coverage": 5.4,
+   "region_ms": 3516.3,
+   "edit_s": 64.8,
+   "outside_changed": 0.0,
+   "query": "let the plate contain ice cream",
+   "recolour": false
+  },
+  "ours": {
+   "iou": 0.6055,
+   "coverage": 8.6,
+   "region_ms": 3940.2,
+   "edit_s": 59.7,
+   "outside_changed": 0.0,
+   "query": "let the plate contain ice cream",
+   "recolour": false
+  }
+ }
+}
