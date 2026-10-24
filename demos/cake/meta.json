@@ -1,0 +1,38 @@
+{
+ "slug": "cake",
+ "instruction": "It should be a chocolate cake on the plate",
+ "kind": "Modify",
+ "input": "demos/cake/input.jpg",
+ "gt": "demos/cake/gt.png",
+ "gt_overlay": "demos/cake/gt_overlay.jpg",
+ "source": "MagicBrush dev, held-out turn 199",
+ "models": {
+  "base": {
+   "iou": 0.4105,
+   "coverage": 66.9,
+   "region_ms": 24.8,
+   "edit_s": 42.3,
+   "outside_changed": 0.0,
+   "query": "plate",
+   "recolour": false
+  },
+  "gsam": {
+   "iou": 0.1053,
+   "coverage": 16.6,
+   "region_ms": 1768.9,
+   "edit_s": 33.2,
+   "outside_changed": 0.0,
+   "query": "plate",
+   "recolour": false
+  },
+  "ours": {
+   "iou": 0.7172,
+   "coverage": 39.3,
+   "region_ms": 2162.4,
+   "edit_s": 33.6,
+   "outside_changed": 0.0,
+   "query": "plate",
+   "recolour": false
+  }
+ }
+}
