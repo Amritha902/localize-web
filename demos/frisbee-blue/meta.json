@@ -1,0 +1,38 @@
+{
+ "slug": "frisbee-blue",
+ "instruction": "make the frisbee blue",
+ "kind": "Recolour",
+ "input": "demos/frisbee-blue/input.jpg",
+ "gt": "demos/frisbee-blue/gt.png",
+ "gt_overlay": "demos/frisbee-blue/gt_overlay.jpg",
+ "source": "MagicBrush dev, held-out turn 102",
+ "models": {
+  "base": {
+   "iou": 0.0156,
+   "coverage": 91.1,
+   "region_ms": 14.2,
+   "edit_s": 0.0,
+   "outside_changed": 27.36,
+   "query": "frisbee",
+   "recolour": true
+  },
+  "gsam": {
+   "iou": 0.8582,
+   "coverage": 2.4,
+   "region_ms": 1816.8,
+   "edit_s": 0.0,
+   "outside_changed": 0.77,
+   "query": "frisbee",
+   "recolour": true
+  },
+  "ours": {
+   "iou": 0.9294,
+   "coverage": 2.6,
+   "region_ms": 2143.8,
+   "edit_s": 0.0,
+   "outside_changed": 0.79,
+   "query": "frisbee",
+   "recolour": true
+  }
+ }
+}
