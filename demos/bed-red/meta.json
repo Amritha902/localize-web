@@ -1,0 +1,38 @@
+{
+ "slug": "bed-red",
+ "instruction": "The bed should be red",
+ "kind": "Recolour",
+ "input": "demos/bed-red/input.jpg",
+ "gt": "demos/bed-red/gt.png",
+ "gt_overlay": "demos/bed-red/gt_overlay.jpg",
+ "source": "MagicBrush dev, held-out turn 494",
+ "models": {
+  "base": {
+   "iou": 0.1592,
+   "coverage": 34.4,
+   "region_ms": 93.6,
+   "edit_s": 0.1,
+   "outside_changed": 3.36,
+   "query": "bed",
+   "recolour": true
+  },
+  "gsam": {
+   "iou": 0.0575,
+   "coverage": 8.1,
+   "region_ms": 2983.9,
+   "edit_s": 0.0,
+   "outside_changed": 4.7,
+   "query": "bed",
+   "recolour": true
+  },
+  "ours": {
+   "iou": 0.4811,
+   "coverage": 19.6,
+   "region_ms": 3473.7,
+   "edit_s": 0.0,
+   "outside_changed": 5.39,
+   "query": "bed",
+   "recolour": true
+  }
+ }
+}
