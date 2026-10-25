@@ -14,10 +14,12 @@
   // GitHub repo by start_backend.sh, so a new tunnel never needs a redeploy.
   async function discoverBackend() {
     if (localStorage.getItem("api")) return;
-    try {
-      const r = await fetch("https://raw.githubusercontent.com/Amritha902/localize-web/main/backend.json?t=" + Date.now(), { cache: "no-store" });
-      const j = await r.json(); if (j.url) API = j.url.replace(/\/$/, "");
-    } catch {}
+    // Read the address from the site's own domain (redeployed on every push) and from
+    // GitHub; some networks block one of the two. Take whichever was updated last.
+    const get = u => fetch(u + "?t=" + Date.now(), { cache: "no-store" }).then(r => r.json()).catch(() => null);
+    const found = (await Promise.all([get("backend.json"), get("https://raw.githubusercontent.com/Amritha902/localize-web/main/backend.json")]))
+      .filter(j => j && j.url).sort((a, b) => (b.updated || "").localeCompare(a.updated || ""));
+    if (found.length) API = found[0].url.replace(/\/$/, "");
   }
   async function checkBackend() {
     if (!API) { live = false; setStatus("cached", "Gallery mode"); updateMode(); return; }
