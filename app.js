@@ -59,6 +59,11 @@
   ["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
   drop.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) useFile(f); });
   file.addEventListener("change", () => { if (file.files[0]) useFile(file.files[0]); });
+  // Paste a photo straight from the clipboard (screenshot, copied image).
+  document.addEventListener("paste", e => {
+    const f = [...(e.clipboardData?.files || [])].find(x => x.type.startsWith("image/"));
+    if (f && !running) { e.preventDefault(); useFile(f); $("#demo").scrollIntoView({ behavior: "smooth" }); }
+  });
   function useFile(f) {
     if (!f.type.startsWith("image/")) return;
     $("#truth").hidden = true;
