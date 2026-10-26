@@ -71,7 +71,7 @@
   function cachedOK() { return cur && !custom && $("#instruction").value.trim() === cur.instruction; }
   function updateMode() {
     const m = $("#mode");
-    if (live) m.textContent = "Runs live on the GPU backend · about 1–2 minutes for all three";
+    if (live) m.textContent = "Runs live on the GPU · regions and scores in seconds, edited photos over the next 1–2 minutes";
     else if (cachedOK()) m.textContent = "Backend offline · showing this pipeline's recorded output";
     else m.textContent = "Custom photos and instructions need the live backend";
     $("#run").disabled = running || !(cur || custom) || !$("#instruction").value.trim() || (!live && !cachedOK());
@@ -115,6 +115,41 @@
               [d.recolour ? "Recoloured in" : "Edited in", d.edit_s.toFixed(1) + " s"]);
     $(".metrics", c).innerHTML = rows.map(([k, v, cl]) => `<dt>${k}</dt><dd class="${cl || ""}">${v}</dd>`).join("");
   }
+  // Stage 1: the region and its score, a few seconds after Run.
+  function metricRows(m, d, edit) {
+    const rows = [];
+    if (d.iou != null) rows.push(["Accuracy (IoU vs true region)", d.iou.toFixed(3), "iou"]);
+    if (edit) rows.push(["Changed outside region", edit.outside_changed.toFixed(2) + "%", "good"]);
+    if (m !== "base" && d.query) rows.push(["Searched for", "“" + d.query + "”"]);
+    rows.push(["Area of photo", d.coverage.toFixed(1) + "%"], ["Region found in", fmtMs(d.region_ms)]);
+    rows.push(edit ? [edit.recolour ? "Recoloured in" : "Edited in", edit.edit_s.toFixed(1) + " s"] : ["Edit", "<span class='wait'>waiting…</span>"]);
+    return rows.map(([k, v, cl]) => `<dt>${k}</dt><dd class="${cl || ""}">${v}</dd>`).join("");
+  }
+  async function fillRegion(m, d) {
+    const c = $(`.card[data-model="${m}"]`), f = $(".frame", c);
+    await loadImg($(".r-region", c), d.region);
+    f.classList.remove("loading"); f.className = "frame show-region done";
+    $$(".seg button", c).forEach(b => b.classList.toggle("on", b.dataset.v === "region"));
+    c.dataset.iou = d.iou == null ? "" : d.iou; c._region = d;
+    $(".metrics", c).innerHTML = metricRows(m, d, null);
+  }
+  // Stage 2: the edited photo, one predictor at a time, with a live timer.
+  function painting(m, on) {
+    const c = $(`.card[data-model="${m}"]`), f = $(".frame", c);
+    let tag = $(".painting", f);
+    if (!on) { if (tag) { clearInterval(tag._t); tag.remove(); } return; }
+    if (!tag) { tag = document.createElement("div"); tag.className = "painting"; f.appendChild(tag); }
+    const t0 = Date.now(); const tick = () => { tag.textContent = "Painting the edit… " + Math.round((Date.now() - t0) / 1000) + " s"; };
+    tick(); tag._t = setInterval(tick, 1000);
+    const w = $(".metrics .wait", c); if (w) w.textContent = "painting…";
+  }
+  async function fillEdit(m, j) {
+    const c = $(`.card[data-model="${m}"]`), f = $(".frame", c);
+    await loadImg($(".r-result", c), j.result); painting(m, false);
+    f.className = "frame show-result done";
+    $$(".seg button", c).forEach(b => b.classList.toggle("on", b.dataset.v === "result"));
+    const d = c._region || j; $(".metrics", c).innerHTML = metricRows(m, d, j);
+  }
   function markBest() {
     const cs = $$(".card").filter(c => c.dataset.iou !== "");
     $$(".card .best").forEach(b => b.remove());
@@ -126,9 +161,9 @@
   const fmtMs = ms => ms >= 1000 ? (ms / 1000).toFixed(1) + " s" : Math.round(ms) + " ms";
   const sleep = t => new Promise(r => setTimeout(r, t));
   // The free tunnel occasionally drops a connection; retry a run before giving up.
-  async function post(fd) {
+  async function post(fd, path = "/api/run") {
     for (let k = 0; k < 3; k++) {
-      try { const r = await fetch(API + "/api/run", { method: "POST", body: fd }); if (r.ok) return r.json(); if (r.status < 500) throw new Error(await r.text()); }
+      try { const r = await fetch(API + path, { method: "POST", body: fd }); if (r.ok) return r.json(); if (r.status < 500) throw new Error(await r.text()); }
       catch (e) { if (k === 2) throw e; }
       await sleep(2000 * (k + 1)); await discoverBackend();
     }
@@ -143,20 +178,25 @@
       if (live) {
         const blob = custom || await (await fetch(cur.input)).blob();
         const gtBlob = cachedOK() && cur.gt ? await (await fetch(cur.gt)).blob() : null;
+        MODELS.forEach(m => loading(m, true, "Finding the region…"));
+        const rf = new FormData(); rf.append("image", blob, "photo.jpg"); rf.append("instruction", ins);
+        if (gtBlob) rf.append("gt", gtBlob, "gt.png");
+        const R = await post(rf, "/api/regions"); source = R.source;
+        await Promise.all(MODELS.map(m => fillRegion(m, R.models[m]))); markBest();
         for (const m of MODELS) {
-          loading(m, true, m === "base" ? "Predicting region…" : "Queued");
-          if (m !== "base") loading(m, true, "Predicting region…");
+          painting(m, true);
           const fd = new FormData(); fd.append("image", blob, "photo.jpg"); fd.append("instruction", ins); fd.append("model", m);
           if (gtBlob) fd.append("gt", gtBlob, "gt.png");
-          const j = await post(fd); source = j.source; await fill(m, j.region, j.result, j);
+          await fillEdit(m, await post(fd));
         }
       } else {
-        for (const m of MODELS) {
-          loading(m, true, "Loading recorded output…"); await sleep(450);
-          const d = cur.models[m];
-          await fill(m, `demos/${cur.slug}/${m}_region.jpg`, `demos/${cur.slug}/${m}_result.jpg`, d);
-        }
+        MODELS.forEach(m => loading(m, true, "Loading recorded output…")); await sleep(400);
+        await Promise.all(MODELS.map(m => fillRegion(m, Object.assign({ region: `demos/${cur.slug}/${m}_region.jpg` }, cur.models[m]))));
         markBest();
+        for (const m of MODELS) {
+          painting(m, true); await sleep(500);
+          await fillEdit(m, Object.assign({ result: `demos/${cur.slug}/${m}_result.jpg` }, cur.models[m]));
+        }
         source = cur.input;
       }
       markBest();
@@ -165,7 +205,7 @@
       chain = { source, turn: 1, ins: [ins] }; MODELS.forEach(m => chain[m] = $(`.card[data-model="${m}"] .r-result`).src);
       $("#history").innerHTML = ""; await addHistory(ins); showFollowup();
     } catch (e) {
-      MODELS.forEach(m => loading(m, false, "Could not reach the backend"));
+      MODELS.forEach(m => { painting(m, false); loading(m, false, "Could not reach the backend"); });
       live = false; checkBackend();
     } finally { running = false; $("#run").classList.remove("busy"); updateMode(); }
   }

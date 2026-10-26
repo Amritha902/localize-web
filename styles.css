@@ -196,3 +196,6 @@ dialog .row{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 .truth{width:100%;margin-top:10px;font-size:13px}
 .truth.on{border-color:var(--blue);color:var(--blue)}
 .acc-note{width:min(1160px,calc(100% - 40px));margin:14px auto 0;color:var(--faint);font-size:13px;line-height:1.5}
+
+.frame .painting{position:absolute;left:10px;bottom:10px;font-size:12px;font-weight:500;color:#fff;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:999px;padding:5px 10px;pointer-events:none}
+.metrics .wait{color:var(--faint);font-weight:400}
