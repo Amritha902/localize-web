@@ -45,7 +45,7 @@
     pick(0);
   }
   function pick(i) {
-    cur = demos[i]; custom = null; $("#truth").hidden = !cur.gt_overlay; $("#truth").classList.remove("on");
+    cur = demos[i]; custom = null; setView("photo"); $("#viewsel").hidden = !cur.gt_overlay; $("#viewhint").hidden = !cur.gt_overlay;
     $$(".thumb").forEach((t, k) => t.classList.toggle("on", k === i));
     setPreview(cur.input); $("#instruction").value = cur.instruction; resetCards(); updateMode();
   }
@@ -66,7 +66,7 @@
   });
   function useFile(f) {
     if (!f.type.startsWith("image/")) return;
-    $("#truth").hidden = true;
+    $("#viewsel").hidden = true; $("#viewhint").hidden = true;
     custom = f; cur = null; $$(".thumb").forEach(t => t.classList.remove("on"));
     setPreview(URL.createObjectURL(f)); $("#instruction").value = ""; $("#instruction").focus(); resetCards(); updateMode();
   }
@@ -78,13 +78,17 @@
     const m = $("#mode");
     if (live) m.textContent = "Runs live on the GPU · regions and scores in seconds, edited photos over the next 1–2 minutes";
     else if (cachedOK()) m.textContent = "Backend offline · showing this pipeline's recorded output";
-    else m.textContent = "Custom photos and instructions need the live backend";
+    else m.textContent = custom ? "Your own photo needs the live backend, which is offline right now" : "Changing the instruction needs the live backend, which is offline right now";
     $("#run").disabled = running || !(cur || custom) || !$("#instruction").value.trim() || (!live && !cachedOK());
   }
 
-  $("#truth").onclick = e => { e.preventDefault(); e.stopPropagation(); if (!cur || !cur.gt_overlay) return;
-    const on = $("#truth").classList.toggle("on"); $("#preview").src = on ? cur.gt_overlay : cur.input;
-    $("#truth").textContent = on ? "Hide true edit region" : "Show true edit region"; };
+  // Photo / the person's own edit / the region they changed
+  function setView(v) {
+    $$("#viewsel button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+    if (cur) $("#preview").src = v === "human" && cur.human ? cur.human : v === "truth" && cur.gt_overlay ? cur.gt_overlay : cur.input;
+  }
+  $$("#viewsel button").forEach(b => b.onclick = e => { e.preventDefault(); e.stopPropagation(); setView(b.dataset.v); });
+  $("#upload-btn").onclick = e => { e.preventDefault(); file.click(); };
 
   // ---- cards
   function resetCards() {
@@ -117,7 +121,7 @@
     rows.push(["Changed outside region", d.outside_changed.toFixed(2) + "%", "good"]);
     if (m !== "base" && d.query) rows.push(["Searched for", "“" + d.query + "”"]);
     rows.push(["Area of photo", d.coverage.toFixed(1) + "%"], ["Region found in", fmtMs(d.region_ms)],
-              [d.recolour ? "Recoloured in" : "Edited in", d.edit_s.toFixed(1) + " s"]);
+              ["Edited in", d.edit_s.toFixed(1) + " s"]);
     $(".metrics", c).innerHTML = rows.map(([k, v, cl]) => `<dt>${k}</dt><dd class="${cl || ""}">${v}</dd>`).join("");
   }
   // Stage 1: the region and its score, a few seconds after Run.
@@ -127,7 +131,7 @@
     if (edit) rows.push(["Changed outside region", edit.outside_changed.toFixed(2) + "%", "good"]);
     if (m !== "base" && d.query) rows.push(["Searched for", "“" + d.query + "”"]);
     rows.push(["Area of photo", d.coverage.toFixed(1) + "%"], ["Region found in", fmtMs(d.region_ms)]);
-    rows.push(edit ? [edit.recolour ? "Recoloured in" : "Edited in", edit.edit_s.toFixed(1) + " s"] : ["Edit", "<span class='wait'>waiting…</span>"]);
+    rows.push(edit ? ["Edited in", edit.edit_s.toFixed(1) + " s"] : ["Edit", "<span class='wait'>waiting…</span>"]);
     return rows.map(([k, v, cl]) => `<dt>${k}</dt><dd class="${cl || ""}">${v}</dd>`).join("");
   }
   async function fillRegion(m, d) {

@@ -55,7 +55,13 @@
           </div>
           <input type="file" id="file" accept="image/*" hidden>
         </label>
-        <button class="btn truth" id="truth" hidden>Show true edit region</button>
+        <div class="seg viewsel" id="viewsel" hidden>
+          <button class="on" data-v="photo">Photo</button><button data-v="human">Human's edit</button><button data-v="truth">True region</button>
+        </div>
+        <p class="viewhint" id="viewhint" hidden>A person made this edit by hand. The yellow region is every pixel they changed; each model is scored against it.</p>
+        <button class="btn upload" id="upload-btn" type="button">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Upload your own photo</button>
         <div class="field">
           <label for="instruction">Instruction</label>
           <input id="instruction" type="text" placeholder="try anything: make it night, change the cat to a fox, make the car blue" autocomplete="off" spellcheck="false">
@@ -88,7 +94,7 @@
       </div>
     </div>
 
-    <p class="acc-note" id="acc-note" hidden>Accuracy is the overlap (IoU) between each predictor's region and the pixels a person actually changed when making this edit, from MagicBrush's held-out set. 1.000 would be a perfect match. Every predictor uses the same editor and the same seed, so only the region differs. These ten were picked from held-out turns where our gain is large; across all 503 held-out turns ours v2 is more accurate than Grounding DINO + SAM 2.1 on 273 and less accurate on 173.</p>
+    <p class="acc-note" id="acc-note" hidden><b>How accuracy is measured.</b> Each gallery photo comes with the version a person edited by hand (press <i>Human's edit</i>). The pixels they changed form the true region. Accuracy (IoU) is how much each model's region overlaps that true region: 1.000 means the model chose exactly the pixels the person changed. All three use the same editor and seed, so only the region differs. These cases were chosen to show the effect clearly; over all 503 held-out edits ours v2 scores 0.277, the best open model 0.272 and the base paper's mechanism 0.131.</p>
 
     <div class="followup glass" id="followup" hidden>
       <div class="compare-head"><h3>Follow up <span class="turn" id="turn">Turn 2</span></h3>

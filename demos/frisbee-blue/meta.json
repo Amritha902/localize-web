@@ -40,5 +40,6 @@
    "iou": 0.9295,
    "recolour": true
   }
- }
+ },
+ "human": "demos/frisbee-blue/human.jpg"
 }

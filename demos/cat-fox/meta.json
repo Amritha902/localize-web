@@ -34,5 +34,6 @@
    "query": "cat",
    "recolour": false
   }
- }
+ },
+ "human": "demos/cat-fox/human.jpg"
 }

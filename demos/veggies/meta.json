@@ -34,5 +34,6 @@
    "query": "fruit",
    "recolour": false
   }
- }
+ },
+ "human": "demos/veggies/human.jpg"
 }

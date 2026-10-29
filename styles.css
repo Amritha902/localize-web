@@ -199,3 +199,8 @@ dialog .row{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 
 .frame .painting{position:absolute;left:10px;bottom:10px;font-size:12px;font-weight:500;color:#fff;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:999px;padding:5px 10px;pointer-events:none}
 .metrics .wait{color:var(--faint);font-weight:400}
+
+.viewsel{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr)}
+.viewsel button{font-size:12.5px}
+.viewhint{margin:8px 2px 0;font-size:12.5px;line-height:1.45;color:var(--faint)}
+.btn.upload{width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px}

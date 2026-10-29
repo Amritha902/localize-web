@@ -34,5 +34,6 @@
    "query": "bowl of fruit",
    "recolour": false
   }
- }
+ },
+ "human": "demos/salad/human.jpg"
 }

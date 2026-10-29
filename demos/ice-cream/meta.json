@@ -34,5 +34,6 @@
    "query": "let the plate contain ice cream",
    "recolour": false
   }
- }
+ },
+ "human": "demos/ice-cream/human.jpg"
 }

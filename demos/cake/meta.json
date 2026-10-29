@@ -34,5 +34,6 @@
    "query": "plate",
    "recolour": false
   }
- }
+ },
+ "human": "demos/cake/human.jpg"
 }
