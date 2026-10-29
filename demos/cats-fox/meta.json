@@ -1,0 +1,45 @@
+{
+ "slug": "cats-fox",
+ "instruction": "swap the cats for a fox",
+ "kind": "Modify",
+ "input": "demos/cats-fox/input.jpg",
+ "gt": "demos/cats-fox/gt.png",
+ "gt_overlay": "demos/cats-fox/gt_overlay.jpg",
+ "human": "demos/cats-fox/human.jpg",
+ "source": "MagicBrush dev, held-out turn 157",
+ "models": {
+  "base": {
+   "region_ms": 13.0,
+   "coverage": 10.8,
+   "edit_s": 20.0,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "cats",
+   "boxes": 2,
+   "iou": 0.0534,
+   "recolour": false
+  },
+  "gsam": {
+   "region_ms": 1139.5,
+   "coverage": 12.9,
+   "edit_s": 20.0,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "cats",
+   "boxes": 2,
+   "iou": 0.8067,
+   "recolour": false
+  },
+  "ours": {
+   "region_ms": 1384.2,
+   "coverage": 13.5,
+   "edit_s": 22.9,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "cats",
+   "boxes": 2,
+   "iou": 0.8231,
+   "recolour": false
+  }
+ }
+}

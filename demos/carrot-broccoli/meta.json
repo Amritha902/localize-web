@@ -1,0 +1,45 @@
+{
+ "slug": "carrot-broccoli",
+ "instruction": "change the carrot into broccoli",
+ "kind": "Modify",
+ "input": "demos/carrot-broccoli/input.jpg",
+ "gt": "demos/carrot-broccoli/gt.png",
+ "gt_overlay": "demos/carrot-broccoli/gt_overlay.jpg",
+ "human": "demos/carrot-broccoli/human.jpg",
+ "source": "MagicBrush dev, held-out turn 124",
+ "models": {
+  "base": {
+   "region_ms": 11.0,
+   "coverage": 60.2,
+   "edit_s": 25.5,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "carrot",
+   "boxes": 12,
+   "iou": 0.2604,
+   "recolour": false
+  },
+  "gsam": {
+   "region_ms": 1382.9,
+   "coverage": 17.0,
+   "edit_s": 22.7,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "carrot",
+   "boxes": 12,
+   "iou": 0.8971,
+   "recolour": false
+  },
+  "ours": {
+   "region_ms": 1652.4,
+   "coverage": 17.6,
+   "edit_s": 21.5,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "carrot",
+   "boxes": 12,
+   "iou": 0.936,
+   "recolour": false
+  }
+ }
+}

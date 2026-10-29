@@ -1,0 +1,45 @@
+{
+ "slug": "orange-kiwi",
+ "instruction": "change the orange into kiwi fruit",
+ "kind": "Modify",
+ "input": "demos/orange-kiwi/input.jpg",
+ "gt": "demos/orange-kiwi/gt.png",
+ "gt_overlay": "demos/orange-kiwi/gt_overlay.jpg",
+ "human": "demos/orange-kiwi/human.jpg",
+ "source": "MagicBrush dev, held-out turn 247",
+ "models": {
+  "base": {
+   "region_ms": 8.9,
+   "coverage": 58.0,
+   "edit_s": 17.1,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "orange",
+   "boxes": 2,
+   "iou": 0.171,
+   "recolour": false
+  },
+  "gsam": {
+   "region_ms": 922.2,
+   "coverage": 10.8,
+   "edit_s": 17.3,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "orange",
+   "boxes": 2,
+   "iou": 0.8446,
+   "recolour": false
+  },
+  "ours": {
+   "region_ms": 1091.1,
+   "coverage": 11.4,
+   "edit_s": 20.4,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "orange",
+   "boxes": 2,
+   "iou": 0.8835,
+   "recolour": false
+  }
+ }
+}

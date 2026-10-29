@@ -1,0 +1,45 @@
+{
+ "slug": "ball-blue",
+ "instruction": "change the green ball to blue",
+ "kind": "Recolour",
+ "input": "demos/ball-blue/input.jpg",
+ "gt": "demos/ball-blue/gt.png",
+ "gt_overlay": "demos/ball-blue/gt_overlay.jpg",
+ "human": "demos/ball-blue/human.jpg",
+ "source": "MagicBrush dev, held-out turn 38",
+ "models": {
+  "base": {
+   "region_ms": 16.1,
+   "coverage": 58.3,
+   "edit_s": 15.6,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "green ball",
+   "boxes": 1,
+   "iou": 0.2484,
+   "recolour": false
+  },
+  "gsam": {
+   "region_ms": 1111.1,
+   "coverage": 17.7,
+   "edit_s": 16.7,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "green ball",
+   "boxes": 1,
+   "iou": 0.9113,
+   "recolour": false
+  },
+  "ours": {
+   "region_ms": 1337.7,
+   "coverage": 18.4,
+   "edit_s": 19.1,
+   "outside_changed": 0.0,
+   "inside_changed": null,
+   "query": "green ball",
+   "boxes": 1,
+   "iou": 0.9202,
+   "recolour": false
+  }
+ }
+}
